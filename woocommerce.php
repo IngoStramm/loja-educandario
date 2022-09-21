@@ -124,10 +124,31 @@ function led_set_not_required_woo_checkout_fields($fields)
     $fields['billing']['billing_postcode']['required'] = false;
     $fields['billing']['billing_country']['required'] = false;
     $fields['billing']['billing_state']['required'] = false;
+
+    $fields['billing']['billing_number']['class'] = array('form-row-wide');
+    $fields['billing']['billing_neighborhood']['class'] = array('form-row-wide');
     return $fields;
 }
 
 add_filter('woocommerce_checkout_fields', 'led_set_not_required_woo_checkout_fields', 99999999);
+
+/**
+ * led_set_wide_row_woo_checkout_fields
+ *
+ * Define largura máxima para alguns campos
+ * 
+ * @param  array $fields
+ * @return array
+ */
+function led_set_wide_row_woo_checkout_fields($fields)
+{
+    $fields['billing']['billing_number']['class'] = array('form-row-wide');
+    $fields['billing']['billing_neighborhood']['class'] = array('form-row-wide');
+    return $fields;
+}
+
+
+add_filter('woocommerce_checkout_fields', 'led_set_wide_row_woo_checkout_fields', 99999999);
 
 // Remove opção de adicionar endereço de entrega diferente do endereço de pagamento
 add_filter('woocommerce_cart_needs_shipping_address', '__return_false');
