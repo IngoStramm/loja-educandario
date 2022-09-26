@@ -39,7 +39,7 @@ function led_style_checkout()
                 display: none !important;
             }
         </style>
-<?php
+    <?php
     endif;
 }
 
@@ -375,3 +375,46 @@ function led_renaming_order_status($order_statuses)
 }
 
 add_filter('wc_order_statuses', 'led_renaming_order_status');
+
+/**
+ * led_hide_price_addcart_not_logged_in
+ * 
+ * Esconde o preço dos produtos se o usuário
+ * não estiver logado
+ *
+ * @param  string $price
+ * @param  object $product
+ * @return void
+ */
+function led_hide_price_addcart_not_logged_in($price, $product)
+{
+    if (!is_user_logged_in()) {
+        $price = null;
+    }
+    return $price;
+}
+
+add_filter('woocommerce_get_price_html', 'led_hide_price_addcart_not_logged_in', 9999, 2);
+
+/**
+ * led_hide_product_form_add_to_cart
+ * 
+ * Esconde (via CSS) a opção de comprar produtos
+ * se o usuário não estiver logado
+ *
+ * @return string
+ */
+function led_hide_product_form_add_to_cart()
+{
+    if (is_user_logged_in())
+        return;
+    ?>
+    <style>
+        .elementor-widget-woocommerce-product-add-to-cart {
+            display: none !important;
+        }
+    </style>
+<?php
+}
+
+add_action('wp_head', 'led_hide_product_form_add_to_cart');
