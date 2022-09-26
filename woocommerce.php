@@ -410,7 +410,8 @@ function led_hide_product_form_add_to_cart()
         return;
     ?>
     <style>
-        .elementor-widget-woocommerce-product-add-to-cart {
+        .elementor-widget-woocommerce-product-add-to-cart,
+        .elementor-widget-jet-single-add-to-cart {
             display: none !important;
         }
     </style>
