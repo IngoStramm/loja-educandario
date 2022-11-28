@@ -4,7 +4,7 @@
  * Plugin Name: Loja Educandário
  * Plugin URI: https://agencialaf.com
  * Description: Descrição do Loja Educandário.
- * Version: 0.0.4
+ * Version: 0.0.5
  * Author: Ingo Stramm
  * Text Domain: led
  * License: GPLv2

@@ -16,25 +16,25 @@ jQuery(function ($) {
 
     var led_exibe_esconde_campos_checkout = function (val, force_show, fields) {
         if (typeof force_show !== 'undefined' && typeof fields !== 'undefined') {
-            console.log('1');
-            console.log('force_show: ' + force_show);
-            console.log('fields: ' + fields);
+            // console.log('1');
+            // console.log('force_show: ' + force_show);
+            // console.log('fields: ' + fields);
             if (force_show && fields) {
-                console.log('1.1');
+                // console.log('1.1');
                 for (var a = fields.length - 1; a >= 0; a--) {
                     fields[a].addClass('visivel');
                 }
             } else if (!force_show && fields) {
-                console.log('1.2');
+                // console.log('1.2');
                 for (var b = fields.length - 1; b >= 0; i--) {
                     fields[b].removeClass('visivel');
                 }
             }
         } else if (led_verifica_formato_cep(val)) {
-            console.log('2');
+            // console.log('2');
             $('#billing_address_1_field, #billing_number_field, #billing_address_2_field, #billing_neighborhood_field, #billing_city_field, #billing_state_field').addClass('visivel');
         } else {
-            console.log('3');
+            // console.log('3');
             $('#billing_address_1_field, #billing_number_field, #billing_address_2_field, #billing_neighborhood_field, #billing_city_field, #billing_state_field').removeClass('visivel');
         }
 
@@ -87,7 +87,7 @@ jQuery(function ($) {
 
                     // Address.
                     if (address.logradouro) {
-                        console.log('encontrou logradouro');
+                        // console.log('encontrou logradouro');
                         $('#' + field + '_address_1').val(address.logradouro).change();
                     }
 
@@ -195,7 +195,7 @@ jQuery(function ($) {
         }); // $(#add_aluno).click
     };
 
-    var rec_disable_enabled_filho = function () {
+    var led_disable_enabled_filho = function () {
         $('.checkbox-aluno .input-checkbox').change(function (e) {
             var checkbox = this;
             var $checkbox = $(this);
@@ -206,7 +206,7 @@ jQuery(function ($) {
             var input_nome = $('.nome-do-aluno[value="' + nome + '"]');
             var input_serie = $('.serie-do-aluno[data-aluno="' + nome + '"]');
             if (checkbox.checked) {
-                console.log('nome: ' + nome);
+                // console.log('nome: ' + nome);
                 input_nome.attr('disabled', false);
                 input_serie.attr('disabled', false);
             } else {
@@ -217,10 +217,41 @@ jQuery(function ($) {
         }); // $(selector).click
     };
 
+    const led_parcelamento_init = () => {
+        const verificaCheckoutFormExiste = setInterval(() => {
+            const checkout_woocommerce_checkout = document.querySelector('form.checkout.woocommerce-checkout');
+
+            if (typeof (checkout_woocommerce_checkout) !== 'undefined' && checkout_woocommerce_checkout !== null) {
+                clearInterval(verificaCheckoutFormExiste);
+                led_get_parcelamento_text(checkout_woocommerce_checkout);
+            }
+        }, 1000);
+    };
+
+    led_get_parcelamento_text = (checkout_woocommerce_checkout) => {
+
+        const default_lkn_cc_installments = document.getElementById('lkn_cc_installments');
+        if (typeof (default_lkn_cc_installments) === 'undefined' || default_lkn_cc_installments === null) {
+            return;
+        }
+
+        const led_parcelamento_text_input = document.createElement('input');
+        led_parcelamento_text_input.setAttribute('type', 'text');
+        led_parcelamento_text_input.id = 'led_parcelamento_text';
+        led_parcelamento_text_input.name = 'led_parcelamento_text';
+        checkout_woocommerce_checkout.appendChild(led_parcelamento_text_input);
+
+        setInterval(() => {
+            const lkn_cc_installments_text = lkn_cc_installments.options[lkn_cc_installments.selectedIndex].text;
+            led_parcelamento_text_input.value = lkn_cc_installments_text;
+        }, 100);
+    };
+
     $(document).ready(function () {
         led_masks_init();
         led_init_cep();
-        rec_disable_enabled_filho();
+        led_disable_enabled_filho();
+        led_parcelamento_init();
     }); // $(document).ready
 
 });
