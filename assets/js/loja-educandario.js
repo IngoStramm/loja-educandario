@@ -236,7 +236,7 @@ jQuery(function ($) {
         }
 
         const led_parcelamento_text_input = document.createElement('input');
-        led_parcelamento_text_input.setAttribute('type', 'text');
+        led_parcelamento_text_input.setAttribute('type', 'hidden');
         led_parcelamento_text_input.id = 'led_parcelamento_text';
         led_parcelamento_text_input.name = 'led_parcelamento_text';
         checkout_woocommerce_checkout.appendChild(led_parcelamento_text_input);
