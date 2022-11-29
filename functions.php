@@ -45,9 +45,9 @@ function led_woocommerce_checkout_order_processed($order_id, $posted_data, $orde
     if (isset($_SESSION['parcelamento'])) {
         $parcelamento = $_SESSION['parcelamento'];
         update_post_meta($order_id, 'parcelamento', $parcelamento);
+        unset($_SESSION['parcelamento']);     
     } else {
         update_post_meta($order_id, 'parcelamento', __('Sem parcelamento', 'led'));
-        wp_die();
     }
 }
 add_action('woocommerce_checkout_order_processed', 'led_woocommerce_checkout_order_processed', 999, 3);
